@@ -38,16 +38,20 @@ const updateNote = async(req,res)=>{
     }
 
 }
-const deleteNote = async(req,res)=>{
+const deleteNote = async (req, res) => {
     const id = req.params.id;
     try {
-        const note = await noteModel.findByIdAndUpdate(Id);
+        const note = await noteModel.findByIdAndDelete(id); 
+        if (!note) {
+            return res.status(404).json({ message: "Note not found" });
+        }
         res.status(202).json(note);
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Something went wrong"});
+        res.status(500).json({ message: "Something went wrong" });
     }
 }
+
 const getNote = async(req,res)=>{
 
     try {
